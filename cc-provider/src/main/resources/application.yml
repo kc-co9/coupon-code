@@ -1,0 +1,77 @@
+server:
+  port: 8080
+  servlet:
+    context-path: /
+
+spring:
+  #  profiles:
+  #    active: dev
+  application.name: coupon-code
+  datasource:
+    driverClassName: com.mysql.cj.jdbc.Driver
+    url: jdbc:mysql://localhost:3306/coupon_code?characterEncoding=utf-8&serverTimezone=GMT%2B8
+    username: root
+    password: root
+
+druid:
+  initialSize: 5 #初始化连接大小
+  minIdle: 5 #最小连接池数量
+  maxActive: 20 #最大连接池数量
+  maxWait: 60000  #获取连接时最大等待时间，单位毫秒
+  timeBetweenEvictionRunsMillis: 60000 #配置间隔多久才进行一次检测，检测需要关闭的空闲连接，单位是毫秒
+  minEvictableIdleTimeMillis: 30000 #配置一个连接在池中最小生存的时间，单位是毫秒
+  filters: stat  #配置扩展插件，常用的插件有=>stat:监控统计  log4j:日志  wall:防御sql注入
+  validationQuery: select 'x' #测试连接 Oracle请使用select 1 from dual
+  testWhileIdle: true #申请连接的时候检测
+  testOnBorrow: false #获取连接时执行检测
+  testOnReturn: false #归还连接时执行检测
+  poolPreparedStatements: true #是否开启PSCache
+  maxOpenPreparedStatments: 20
+  maxPoolPreparedStatementPerConnectionSize: 20   #开启poolPreparedStatements后生效
+  connectionProperties: 'druid.stat.mergeSql=true;druid.stat.slowSqlMillis=5000'  #通过connectProperties属性来打开mergeSql功能;慢SQL记录
+  useGlobalDataSourceStat: true  # 合并多个DruidDataSource的监控数据
+
+mybatis-plus:
+  #数据库映射enum扫描地址
+  typeEnumsPackage: com.co.kc.**.enums
+  mapper-locations: classpath*:/dao/**/*.xml
+  configuration:
+    localCacheScope: STATEMENT
+    cacheEnabled: false
+#    log-impl: org.apache.ibatis.logging.stdout.StdOutImpl
+
+knife4j:
+  enable: true
+  cors: false
+  production: false
+  basic:
+    enable: false
+    username: dev
+    password: dev
+  #  documents:
+  #    - group: API
+  #      name: 常见问题
+  #      locations: classpath:markdown/return_code.md
+  setting:
+    language: zh-CN
+    enableSwaggerModels: true
+    enableDocumentManage: true
+    swaggerModelName: 实体类列表
+    enableVersion: false
+    enableReloadCacheParameter: true
+    enableAfterScript: false
+    enableFilterMultipartApiMethodType: POST
+    enableFilterMultipartApis: false
+    enableRequestCache: true
+    enableHost: false
+    enableHostText: false
+    enableHomeCustom: false
+    #    homeCustomLocation: classpath:markdown/home.md
+    enableSearch: true
+    enableFooter: false
+    enableFooterCustom: true
+    footerCustomContent: Apache License 2.0 | Copyright  2024-[coupon-code]
+    enableDynamicParameter: true
+    enableDebug: true
+    enableOpenApi: true
+    enableGroup: true
